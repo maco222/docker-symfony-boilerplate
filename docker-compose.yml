@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+    db:
+        image: mysql
+        volumes:
+            - "./var/db:/var/lib/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    php:
+        build: docker/php7-fpm
+        ports:
+            - 9000:9000
+        volumes:
+            - .:/var/www/symfony
+    nginx-proxy:
+        image: jwilder/nginx-proxy
+        container_name: nginx-proxy
+        ports:
+            - "80:80"
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+    nginx:
+        build: 
+            context: ./docker/nginx
+            args:
+                PROJECT_NAME: ${PROJECT_NAME}
+        ports:
+            - 81:80
+        volumes_from:
+            - php
+        volumes:
+            - ./var/logs/nginx/:/var/log/nginx
+        environment:
+            VIRTUAL_HOST: ${PROJECT_NAME}
+    memcached:
+        image:  memcached
