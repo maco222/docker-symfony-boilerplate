@@ -1,5 +1,7 @@
 # Docker Boilerplate for Symfony 2x/3x projects
 
+[![Build Status](https://travis-ci.org/maco222/docker-symfony-boilerplate.svg?branch=master)](https://travis-ci.org/maco222/docker-symfony-boilerplate)
+
 Dockerfiles and docker-compose configuration for Symfony 2.x/3.x PHP applications. Includes PHP7.0/MySQL/nginx/memcached and more.
 
 Thanks to [Maxence POUTORD](https://github.com/maxpou) for his [maxpou/docker-symfony](https://github.com/maxpou/docker-symfony) as my Dockerfiles source.
